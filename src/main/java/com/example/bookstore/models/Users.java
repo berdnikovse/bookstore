@@ -31,6 +31,7 @@ public class Users implements CommonEntity<Long> {
     @NonNull
     private String status;
 
+
     /*public Users (Long id, String nickname, String password, String status) {
         this.id = id;
         this.nickname = nickname;

@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestPropertySource(locations="classpath:application.properties")
-public class CommonDAOTest {
+public class UsersDAOTest {
 
     @Autowired
     private UsersDAO UsersDAO = new UsersDAOImpl();
