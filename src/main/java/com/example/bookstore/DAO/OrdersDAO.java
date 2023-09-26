@@ -7,5 +7,6 @@ import java.util.List;
 public interface OrdersDAO extends CommonDAO<Orders, Long> {
     List<Orders> getAllUserOrders(Long UserId);
     void changeStatus(Orders OrderToChange, String NewStatus);
-    void addNewOrder(Users User, Books Book, Integer BookNumber, String DeliveryPlace);
+    Integer getOrderPrice(Orders Order);
+    Long addNewOrder(Users User, Books Book, Integer BookNumber, String DeliveryPlace);
 }

@@ -1,9 +1,12 @@
 package com.example.bookstore.DAO.impl;
 
+import com.example.bookstore.DAO.BooksDAO;
 import com.example.bookstore.DAO.OrdersDAO;
 import com.example.bookstore.models.Orders;
 import com.example.bookstore.models.Users;
 import com.example.bookstore.models.Books;
+import org.hibernate.Session;
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -34,8 +37,27 @@ public class OrdersDAOImpl extends CommonDAOImpl<Orders, Long> implements Orders
     }
 
     @Override
-    public void addNewOrder(Users User, Books Book, Integer BookNumber,
+    public Integer getOrderPrice(Orders Order) {
+        return Order.getBook_number() * Order.getBook_id().getBookPrice();
+    }
+
+    @Override
+    public Long addNewOrder(Users User, Books Book, Integer BookNumber,
                             String DeliveryPlace) {
-        save(new Orders(null, User, Book, BookNumber, DeliveryPlace, "в обработке"));
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            if (Book.getBookNumber() < BookNumber) {
+                return 0L;
+            }
+            Orders new_order = new Orders(null, User, Book, BookNumber, DeliveryPlace, "в обработке");
+            /*Query query = session.createQuery("UPDATE Books SET book_number = :gotNumber WHERE id = :gotId");
+            query.setParameter("gotNumber", Book.getBookNumber() - BookNumber);
+            query.setParameter("gotId", Book.getId());*/
+            Book.addCopies(BookNumber);
+            session.saveOrUpdate(Book);
+            Long new_id = (Long) session.save(new_order);
+            session.getTransaction().commit();
+            return new_id;
+        }
     }
 }

@@ -68,4 +68,14 @@ public class Orders implements CommonEntity<Long> {
     public void setStatus(String NewStatus) {
         this.status = NewStatus;
     }
+    public Books getBook_id() {
+        return this.book_id;
+    }
+    public String getStatus() {
+        return this.status;
+    }
+    public Integer getBook_number() {
+        return this.book_number;
+    }
+
 }

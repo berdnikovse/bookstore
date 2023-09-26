@@ -37,7 +37,7 @@ public class Users implements CommonEntity<Long> {
         this.nickname = nickname;
         this.password = password;
         this.status = status;
-    }*/
+    }
     @Override
     public Long getId() {
         return null;
@@ -46,7 +46,7 @@ public class Users implements CommonEntity<Long> {
     @Override
     public void setId(Long aLong) {
 
-    }
+    }*/
 
     public String getPassword() {
         return password;

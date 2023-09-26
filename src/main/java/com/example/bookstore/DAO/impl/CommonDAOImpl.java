@@ -52,7 +52,7 @@ public abstract class CommonDAOImpl<T extends CommonEntity<ID>, ID extends Seria
                 entity.setId(null);
             }
             session.beginTransaction();
-            session.persist(entity);
+            session.saveOrUpdate(entity);
             session.getTransaction().commit();
         }
     }

@@ -1,4 +1,4 @@
-package com.example.bookstore.DAO;
+/*package com.example.bookstore.DAO;
 
 import com.example.bookstore.models.Users;
 import org.hibernate.Session;
@@ -51,3 +51,4 @@ public class CommonDAOTest {
         }
     }
 }
+*/

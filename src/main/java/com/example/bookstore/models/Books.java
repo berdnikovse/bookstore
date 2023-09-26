@@ -40,16 +40,20 @@ public class Books implements CommonEntity<Long> {
     @NonNull
     private Integer book_number;
 
-    @Override
-    public Long getId() {
-        return null;
-    }
+    @Column(nullable = false, name = "price")
+    @NonNull
+    private Integer price;
 
-    @Override
-    public void setId(Long aLong) {
+    @Column(nullable = true, name = "annotation")
+    private String annotation;
 
-    }
     public void addCopies(Integer added_number) {
         this.book_number += added_number;
+    }
+    public Integer getBookNumber() {
+        return this.book_number;
+    }
+    public Integer getBookPrice() {
+        return this.price;
     }
 }

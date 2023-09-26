@@ -29,4 +29,18 @@ public class UsersDAOImpl extends CommonDAOImpl<Users, Long> implements UsersDAO
         }
     }
 
+    @Override
+    public boolean addNewUser(String userNickname, String password) {
+        try (Session session = sessionFactory.openSession()) {
+            Query<Users> query = session.createQuery("FROM Users WHERE nickname = :gotNick", Users.class)
+                    .setParameter("gotNick", userNickname);
+            if (query.getResultList().size() == 0) {
+                session.saveOrUpdate(new Users(null, userNickname, password,"user"));
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
 }

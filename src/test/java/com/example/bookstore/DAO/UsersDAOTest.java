@@ -32,9 +32,20 @@ public class UsersDAOTest {
         UsersDAO.save(new_user);
         assertTrue(UsersDAO.getById(11L).checkPrivelege());
         assertEquals("Armand Jean", UsersDAO.getById(11L).getPassword());
+        assertTrue(UsersDAO.checkHashPassword("cardinal", "Armand Jean"));
+        assertFalse(UsersDAO.checkHashPassword("cardinal", "pwd"));
         UsersDAO.deleteById(11L);
         Users del_user = UsersDAO.getById(11L);
         assertNull(del_user);
+    }
+
+    @Test
+    void testUserAdding() {
+        assertTrue(UsersDAO.addNewUser("cardinal", "pwd"));
+        assertEquals("pwd", UsersDAO.getById(11L).getPassword());
+        assertFalse(UsersDAO.checkHashPassword("cardinal", "Armand Jean"));
+        assertFalse(UsersDAO.addNewUser("cardinal", "pwd"));
+        UsersDAO.deleteById(11L);
     }
 
     @BeforeEach
