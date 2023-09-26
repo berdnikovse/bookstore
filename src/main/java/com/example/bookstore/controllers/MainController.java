@@ -84,6 +84,8 @@ public class MainController {
         model.remove("userStatus");
         model.remove("nickname");
         model.remove("password");
+        model.addAttribute("nickname", "");
+        model.addAttribute("password", "");
         return "index";
     }
 
@@ -238,5 +240,67 @@ public class MainController {
 
         model.addAttribute("book", book);
         return "book";
+    }
+
+    @GetMapping("/orders")
+    public String ordersListPage(ModelMap model) {
+        model.remove("userStatus");
+        if (!model.containsAttribute("nickname") || !model.containsAttribute("password") ||
+                !UsersDAO.checkHashPassword(
+                        model.getAttribute("nickname").toString(),
+                        model.getAttribute("password").toString())) {
+            model.addAttribute("userStatus", "unknown");
+        } else {
+            if (UsersDAO.checkStatus(model.getAttribute("nickname").toString())) {
+                model.addAttribute("userStatus", "admin");
+            } else {
+                model.addAttribute("userStatus", "user");
+            }
+        }
+
+        List<Orders> orders = (List<Orders>) OrdersDAO.getAll();
+        model.addAttribute("orders", orders);
+        List<Orders> userOrders = (List<Orders>) OrdersDAO.getAllUserOrders((UsersDAO.getUserByNickname(model.getAttribute("nickname").toString())).getId());
+        model.addAttribute("userOrders", userOrders);
+        model.addAttribute("OrdersDAO", OrdersDAO);
+        return "orders";
+    }
+    @PostMapping(value = "/changeStatus")
+    public String changeStatusPost(@RequestParam(name = "orderid") Long orderid,
+                               @RequestParam(name = "statuses") String statuses,
+                               ModelMap model) {
+        if (!model.containsAttribute("nickname") || !model.containsAttribute("password") ||
+                !UsersDAO.checkHashPassword(
+                        model.getAttribute("nickname").toString(),
+                        model.getAttribute("password").toString())) {
+            model.addAttribute("error_msg", "Не хватает прав");
+            return "errorPage";
+        } else {
+            if (UsersDAO.checkStatus(model.getAttribute("nickname").toString())) {
+                OrdersDAO.changeStatus(OrdersDAO.getById(orderid), statuses);
+                return "redirect:/orders";
+            } else {
+                model.addAttribute("error_msg", "Не хватает прав");
+                return "errorPage";
+            }
+        }
+    }
+    @RequestMapping(value = "/register")
+    public String register(ModelMap model) {
+        return "register";
+    }
+    @PostMapping(value = "/register")
+    public String registerPost(@RequestParam String nickname,
+                            @RequestParam String password,
+                            ModelMap model) {
+        if (UsersDAO.addNewUser(nickname, password)) {
+            model.addAttribute("nickname", nickname);
+            model.addAttribute("password", password);
+            return "redirect:/";
+        }
+        else {
+            model.addAttribute("error_msg", "Имя пользователя уже занято.");
+            return "errorPage";
+        }
     }
 }

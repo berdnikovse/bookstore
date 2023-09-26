@@ -1,0 +1,144 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Заказы</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style>
+        .indent {
+            margin-left: 30px;
+            margin-right: 30px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<td th:switch="${userStatus}">
+    <div th:case="'admin'"> <div th:replace="generalAdmin :: page-header"></div>
+    </div>
+    <div th:case="'user'"> <div th:replace="generalUser :: page-header"></div>
+    </div>
+    <div th:case="*"> <div th:replace="generalUnknown :: page-header"></div>
+    </div>
+</td>
+
+
+
+
+<div class="indent">
+    <span th:if="${userStatus == 'user'}">
+        <table id="ordersUserTable" class="table table-bordered table-warning">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col"> Номер заказа</th>
+                <th scope="col"> Книга</th>
+                <th scope="col"> Количество книг</th>
+                <th scope="col"> Стоимость заказа</th>
+                <th scope="col"> Магазин доставки</th>
+                <th scope="col"> Статус заказа</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="order : ${userOrders}">
+                <td>
+                    <p th:text="${order.getId()}"> </p>
+                </td>
+                <td>
+                    <a th:href="'/book?bookId=' + ${order.getBook_id().getId}">
+                        <span th:text="${order.getBook_name()}"> </span>
+                    </a>
+                </td>
+                <td>
+                    <p th:text="${order.getBook_number()}"> </p>
+                </td>
+                <td>
+                    <p th:text="${OrdersDAO.getOrderPrice(order)}"> </p>
+                </td>
+                <td>
+                    <p th:text="${order.getDelivery()}"> </p>
+                </td>
+                <td>
+                    <p th:text="${order.getStatus()}"> </p>
+                </td>
+
+            </tr>
+            </tbody>
+        </table>
+    </span>
+
+    <span th:if="${userStatus == 'admin'}">
+        <table id="ordersAdminTable" class="table table-bordered table-warning">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col"> Номер заказа</th>
+                <th scope="col"> Пользователь</th>
+                <th scope="col"> Книга</th>
+                <th scope="col"> Количество книг</th>
+                <th scope="col"> Стоимость заказа</th>
+                <th scope="col"> Магазин доставки</th>
+                <th scope="col"> Статус заказа</th>
+                <th scope="col"> Поменять статус</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="order : ${orders}">
+                <td>
+                    <p th:text="${order.getId()}"> </p>
+                </td>
+                <td>
+                    <p th:text="${order.getId}"> </p>
+                </td>
+                <td>
+                    <p th:text="${order.getUser_nickname}"> </p>
+                </td>
+                <td>
+                    <a th:href="'/book?bookId=' + ${order.getBook_id().getId}">
+                        <span th:text="${order.getBook_name()}"> </span>
+                    </a>
+                </td>
+                <td>
+                    <p th:text="${order.getBook_number()}"> </p>
+                </td>
+                <td>
+                    <p th:text="${OrdersDAO.getOrderPrice(order)}"> </p>
+                </td>
+                <td>
+                    <p th:text="${order.getDelivery()}"> </p>
+                </td>
+                <td>
+                    <p th:text="${order.getStatus()}"> </p>
+                </td>
+                <td>
+                    <form action = "/changeStatus" method="post" >
+                        <input name="orderid" type="hidden" th:value="*{order.getId()}">
+                        <label>Выберите статус:</label>
+                        <select id="statuses" name="statuses">
+                            <option value="в обработке">в обработке</option>
+                            <option value="в пути">в пути</option>
+                            <option value="доставлено">доставлено</option>
+                            <option value="получено">получено</option>
+                        </select>
+                        <button type="submit" class="btn btn-success">Поменять</button>
+                    </form>
+                </td>
+
+            </tr>
+            </tbody>
+        </table>
+    </span>
+</div>
+
+
+<td th:switch="${userStatus}">
+    <div th:case="admin"> <div th:replace="generalAdmin :: site-script"></div>
+    </div>
+    <div th:case="user"> <div th:replace="generalUser :: site-script"></div>
+    </div>
+    <div th:case="unknown"> <div th:replace="generalUnknown :: site-script"></div>
+    </div>
+</td>
+
+</body>
+</html>

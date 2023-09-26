@@ -51,6 +51,9 @@ public class Users implements CommonEntity<Long> {
     public String getPassword() {
         return this.password;
     }
+    public String getNickname() {
+        return this.nickname;
+    }
     public boolean checkPrivelege() {
         return Objects.equals(status, "admin");
     }

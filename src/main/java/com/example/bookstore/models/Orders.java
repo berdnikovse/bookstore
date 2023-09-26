@@ -52,18 +52,11 @@ public class Orders implements CommonEntity<Long> {
         this.status = status;
     }*/
 
-    @Override
-    public Long getId() {
-        return null;
-    }
-
-    @Override
-    public void setId(Long aLong) {
-
-    }
-
     public Users getUser_id() {
         return this.user_id;
+    }
+    public String getUser_nickname() {
+        return this.user_id.getNickname();
     }
     public void setStatus(String NewStatus) {
         this.status = NewStatus;
@@ -71,8 +64,14 @@ public class Orders implements CommonEntity<Long> {
     public Books getBook_id() {
         return this.book_id;
     }
+    public String getBook_name() {
+        return this.book_id.getName();
+    }
     public String getStatus() {
         return this.status;
+    }
+    public String getDelivery() {
+        return this.delivery_place;
     }
     public Integer getBook_number() {
         return this.book_number;

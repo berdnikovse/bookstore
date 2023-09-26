@@ -33,7 +33,11 @@ public class OrdersDAOImpl extends CommonDAOImpl<Orders, Long> implements Orders
     @Override
     public void changeStatus(Orders OrderToChange, String NewStatus) {
         OrderToChange.setStatus(NewStatus);
-        save(OrderToChange);
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            session.saveOrUpdate(OrderToChange);
+            session.getTransaction().commit();
+        }
     }
 
     @Override
