@@ -49,7 +49,7 @@ public class Users implements CommonEntity<Long> {
     }*/
 
     public String getPassword() {
-        return password;
+        return this.password;
     }
     public boolean checkPrivelege() {
         return Objects.equals(status, "admin");

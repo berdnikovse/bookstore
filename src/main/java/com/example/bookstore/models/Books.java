@@ -56,4 +56,13 @@ public class Books implements CommonEntity<Long> {
     public Integer getBookPrice() {
         return this.price;
     }
+    public String getName() {
+        return this.name;
+    }
+    public String getAuthor() {
+        return this.author;
+    }
+    public String getGenre() {
+        return this.genre;
+    }
 }
