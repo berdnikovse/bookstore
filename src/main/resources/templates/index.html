@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Главная страница</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style>
+        .indent {
+            margin-left: 30px;
+            margin-right: 30px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<td th:switch="${userStatus}">
+    <div th:case="'admin'"> <div th:replace="generalAdmin :: page-header"></div>
+    </div>
+    <div th:case="'user'"> <div th:replace="generalUser :: page-header"></div>
+    </div>
+    <div th:case="*"> <div th:replace="generalUnknown :: page-header"></div>
+    </div>
+</td>
+
+
+<div class="indent">
+    <h3 class="text-center">Книжный магазин «Белая тысяча».</h3>
+    <br>
+    <span class="text-center indent"> Надоело, что вы не можете наслаждаться книгой в метро из-за ее плохой репутации? Друзья смеются из-за увлечений?</span>
+    <br>
+    <span class="text-center indent"> У нас для вас лаконичные обложки (никаких намеков на то, что внутри!) и роскошное содержание 😏</span>
+    <br>
+    <td th:switch="${userStatus}">
+        <div th:case="admin"> <div th:replace="generalAdmin :: site-footer"></div>
+        </div>
+        <div th:case="user"> <div th:replace="generalUser :: site-footer"></div>
+        </div>
+        <div th:case="unknown"> <div th:replace="generalUnknown :: site-footer"></div>
+        </div>
+    </td>
+</div>
+
+
+<td th:switch="${userStatus}">
+    <div th:case="admin"> <div th:replace="generalAdmin :: site-script"></div>
+    </div>
+    <div th:case="user"> <div th:replace="generalUser :: site-script"></div>
+    </div>
+    <div th:case="unknown"> <div th:replace="generalUnknown :: site-script"></div>
+    </div>
+</td>
+
+</body>
+</html>

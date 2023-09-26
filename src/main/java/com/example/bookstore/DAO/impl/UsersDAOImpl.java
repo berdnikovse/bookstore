@@ -30,6 +30,19 @@ public class UsersDAOImpl extends CommonDAOImpl<Users, Long> implements UsersDAO
     }
 
     @Override
+    public boolean checkStatus(String userNickname) {
+        try (Session session = sessionFactory.openSession()) {
+            Query<Users> query = session.createQuery("FROM Users WHERE nickname = :gotName", Users.class)
+                    .setParameter("gotName", userNickname);
+            if (query.getResultList().isEmpty())
+                return false;
+            Users userToCheck = query.getResultList().get(0);
+
+            return userToCheck.checkPrivelege();
+        }
+    }
+
+    @Override
     public boolean addNewUser(String userNickname, String password) {
         try (Session session = sessionFactory.openSession()) {
             Query<Users> query = session.createQuery("FROM Users WHERE nickname = :gotNick", Users.class)

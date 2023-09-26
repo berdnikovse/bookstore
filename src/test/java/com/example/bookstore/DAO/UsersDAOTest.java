@@ -44,6 +44,7 @@ public class UsersDAOTest {
         assertTrue(UsersDAO.addNewUser("cardinal", "pwd"));
         assertEquals("pwd", UsersDAO.getById(11L).getPassword());
         assertFalse(UsersDAO.checkHashPassword("cardinal", "Armand Jean"));
+        assertFalse(UsersDAO.checkStatus("cardinal"));
         assertFalse(UsersDAO.addNewUser("cardinal", "pwd"));
         UsersDAO.deleteById(11L);
     }
