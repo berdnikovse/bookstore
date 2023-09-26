@@ -65,4 +65,13 @@ public class Books implements CommonEntity<Long> {
     public String getGenre() {
         return this.genre;
     }
+    public String getCoverage() {
+        return this.cover_type;
+    }
+    public Integer getPages() {
+        return this.size;
+    }
+    public String getAnnotation() {
+        return this.annotation;
+    }
 }

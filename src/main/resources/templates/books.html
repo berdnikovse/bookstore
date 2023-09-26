@@ -31,16 +31,19 @@
     <label th:if="${userStatus == 'admin'}">Добавление книги</label>
     <span th:if="${userStatus == 'admin'}">
     <form th:action="@{/addBook}" method="post">
-        <input id="newName" type="text" name="newName" th:value="${newName}"  placeholder="Название книги" size="50" >
-        <input id="newAuthor" type="text" name="newAuthor" th:value="${newAuthor}"  placeholder="Автор книги" size="50" >
-        <input id="newPrice" type="text" name="newPrice" th:value="${newPrice}"  placeholder="Цена книги" size="50" >
+        <input id="newName" type="text" name="newName" th:value="${newName}"  placeholder="Название книги" size="50" required>
+        <input id="newAuthor" type="text" name="newAuthor" th:value="${newAuthor}"  placeholder="Автор книги" size="50" required>
+        <input id="newPrice" type="text" name="newPrice" th:value="${newPrice}"  placeholder="Цена книги" size="50" required>
+        <input id="newNumber" type="text" name="newNumber" th:value="${newNumber}"  placeholder="Размер партии" size="50" required>
+        <br>
         <label>Тип обложки:</label>
         <br>
         <input type="radio" id="newCoverage1" name="newCoverage" value="мягкая" required/>мягкая
         <input type="radio" id="newCoverage2" name="newCoverage" value="твёрдая" required/>твёрдая
         <br><br>
-        <input id="newPages" type="text" name="newPages" th:value="${newPages}"  placeholder="Количество страниц книги" size="50" >
-        <input id="newAnno" type="text" name="newAnno" th:value="${newAnno}"  placeholder="Аннотация книги" size="50" >
+        <input id="newGenre" type="text" name="newGenre" th:value="${newGenre}"  placeholder="Жанр книги" size="50" required>
+        <input id="newPages" type="text" name="newPages" th:value="${newPages}"  placeholder="Количество страниц книги" size="50" required>
+        <input id="newAnno" type="text" name="newAnno" th:value="${newAnno}"  placeholder="Аннотация книги" size="50" required>
         <button id="addBookSubmitButton" type="submit" class="btn btn-info" >Добавить книгу</button>
     </form>
     </span>

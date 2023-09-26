@@ -53,7 +53,7 @@ public class OrdersDAOImpl extends CommonDAOImpl<Orders, Long> implements Orders
             /*Query query = session.createQuery("UPDATE Books SET book_number = :gotNumber WHERE id = :gotId");
             query.setParameter("gotNumber", Book.getBookNumber() - BookNumber);
             query.setParameter("gotId", Book.getId());*/
-            Book.addCopies(BookNumber);
+            Book.addCopies(-BookNumber);
             session.saveOrUpdate(Book);
             Long new_id = (Long) session.save(new_order);
             session.getTransaction().commit();

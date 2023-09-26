@@ -154,4 +154,89 @@ public class MainController {
             }
         }
     }
+    @PostMapping(value = "/orderBook")
+    public String orderBookPost(@RequestParam(name = "bookid") Long bookid,
+                              @RequestParam(name = "delivery") String delivery,
+                              @RequestParam(name = "orderNumber") Integer orderNumber,
+                              ModelMap model) {
+        if (!model.containsAttribute("nickname") || !model.containsAttribute("password") ||
+                !UsersDAO.checkHashPassword(
+                        model.getAttribute("nickname").toString(),
+                        model.getAttribute("password").toString())) {
+            model.addAttribute("error_msg", "Не хватает прав");
+            return "errorPage";
+        } else {
+            if (UsersDAO.checkStatus(model.getAttribute("nickname").toString())) {
+                model.addAttribute("error_msg", "Не хватает прав");
+                return "errorPage";
+            } else {
+                if (OrdersDAO.addNewOrder(UsersDAO.getUserByNickname(model.getAttribute("nickname").toString()),
+                        BooksDAO.getById(bookid), orderNumber, delivery) != 0) {
+                    return "redirect:/books";
+                } else {
+                    model.addAttribute("error_msg", "Слишком много книг для заказа");
+                    return "errorPage";
+                }
+
+            }
+        }
+    }
+
+    @PostMapping(value = "/addBook")
+    public String addBookPost(@RequestParam(name = "newName") String newName,
+                              @RequestParam(name = "newAuthor") String newAuthor,
+                              @RequestParam(name = "newPrice") Integer newPrice,
+                              @RequestParam(name = "newCoverage", defaultValue = "") String newCoverage,
+                              @RequestParam(name = "newGenre", defaultValue = "") String newGenre,
+                              @RequestParam(name = "newNumber") Integer newNumber,
+                              @RequestParam(name = "newPages", defaultValue = "") Integer newPages,
+                              @RequestParam(name = "newAnno", defaultValue = "") String newAnno,
+                              ModelMap model) {
+        if (!model.containsAttribute("nickname") || !model.containsAttribute("password") ||
+                !UsersDAO.checkHashPassword(
+                        model.getAttribute("nickname").toString(),
+                        model.getAttribute("password").toString())) {
+            model.addAttribute("error_msg", "Не хватает прав");
+            return "errorPage";
+        } else {
+            if (UsersDAO.checkStatus(model.getAttribute("nickname").toString())) {
+                /*if (!newName || !newAuthor || !newPrice || !newNumber) {
+                    model.addAttribute("error_msg", "Недостаточно информации");
+                    return "errorPage";
+                }*/
+                Books new_book = new Books(null, newAuthor, newName, newCoverage, newGenre, newPages, newNumber, newPrice, newAnno);
+                BooksDAO.save(new_book);
+                return "redirect:/books";
+            } else {
+                model.addAttribute("error_msg", "Не хватает прав");
+                return "errorPage";
+            }
+        }
+    }
+
+    @GetMapping("/book")
+    public String bookPage(@RequestParam(name = "bookId") Long bookId, ModelMap model) {
+        model.remove("userStatus");
+        if (!model.containsAttribute("nickname") || !model.containsAttribute("password") ||
+                !UsersDAO.checkHashPassword(
+                        model.getAttribute("nickname").toString(),
+                        model.getAttribute("password").toString())) {
+            model.addAttribute("userStatus", "unknown");
+        } else {
+            if (UsersDAO.checkStatus(model.getAttribute("nickname").toString())) {
+                model.addAttribute("userStatus", "admin");
+            } else {
+                model.addAttribute("userStatus", "user");
+            }
+        }
+        Books book = BooksDAO.getById(bookId);
+
+        if (book == null) {
+            model.addAttribute("error_msg", "В базе нет книги с ID = " + bookId);
+            return "errorPage";
+        }
+
+        model.addAttribute("book", book);
+        return "book";
+    }
 }
