@@ -1,5 +1,5 @@
 ## Схема страниц:
-![](https://github.com/berdnikovse/bookstore/raw/main/info/pages.jpg)
+![](https://github.com/berdnikovse/bookstore/raw/master/info/pages.png)
 ## Описание страниц:
 1) Main menu (с каждой страницы можно попасть на эту).
 2) Books

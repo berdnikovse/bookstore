@@ -1,5 +1,5 @@
 ## Схема базы данных:
-![](https://github.com/berdnikovse/bookstore/raw/main/info/scheme.jpg)
+![](https://github.com/berdnikovse/bookstore/raw/master/info/sheme.png)
 Жирным шрифтом выделены те строки, без которых новый объект не может быть внесён в таблицу.
 ## Описание таблиц:
 * books -- таблица с информацией о книгах. Помимо очевидных есть следующие поля: cover_type -- тип обложки, genre -- жанр, size -- количество страниц, book_number -- количесвто книг на складе, price -- цена, annotation -- аннотация.
