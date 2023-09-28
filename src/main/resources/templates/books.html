@@ -84,7 +84,7 @@
                 <form action = "/addBooks" method="post" >
                     <input name="bookid" type="hidden" th:value="*{book.getId()}">
                     <input type="text" name="numberToAdd" placeholder="Количество новых экземпляров" class="form-control">
-                    <button type="submit" class="btn btn-success">Положить</button>
+                    <button id="addBookButton" type="submit" class="btn btn-success">Положить</button>
                 </form>
             </td>
         </tr>

@@ -31,7 +31,7 @@
         <form action = "/login" method="post">
             <input type="text" name="nickname" placeholder="Введите логин" class="form-control">
             <input type="text" name="password" placeholder="Введите пароль" class="form-control">
-            <button type="submit" class="btn btn-success">Войти</button>
+            <button type="submit" id="submitButton" class="btn btn-success">Войти</button>
         </form>
     </div>
     <td th:switch="${userStatus}">

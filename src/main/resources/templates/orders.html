@@ -85,7 +85,7 @@
             <tbody>
             <tr th:each="order : ${orders}">
                 <td>
-                    <p th:text="${order.getId}"> </p>
+                    <p id="certainOrderId" th:text="${order.getId}"> </p>
                 </td>
                 <td>
                     <p th:text="${order.getUser_nickname}"> </p>
@@ -114,10 +114,10 @@
                         <select id="statuses" name="statuses">
                             <option value="в обработке">в обработке</option>
                             <option value="в пути">в пути</option>
-                            <option value="доставлено">доставлено</option>
+                            <option id="status_delivered" value="доставлено">доставлено</option>
                             <option value="получено">получено</option>
                         </select>
-                        <button type="submit" class="btn btn-success">Поменять</button>
+                        <button id="changeStatusSubmitButton" type="submit" class="btn btn-success">Поменять</button>
                     </form>
                 </td>
 
